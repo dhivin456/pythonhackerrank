@@ -1,33 +1,22 @@
-#!/bin/python3
+import queue
 
-import math
-import os
-import random
-import re
-import sys
-
-#
-# Complete the 'truckTour' function below.
-#
-# The function is expected to return an INTEGER.
-# The function accepts 2D_INTEGER_ARRAY petrolpumps as parameter.
-#
-
-def truckTour(petrolpumps):
-    # Write your code here
-
-if __name__ == '__main__':
-    fptr = open(os.environ['OUTPUT_PATH'], 'w')
-
+if __name__ == "__main__":
     n = int(input().strip())
+    res = 0
+    tank = 0
+    q = queue.Queue()
 
-    petrolpumps = []
-
-    for _ in range(n):
-        petrolpumps.append(list(map(int, input().rstrip().split())))
-
-    result = truckTour(petrolpumps)
-
-    fptr.write(str(result) + '\n')
-
-    fptr.close()
+    
+    for ind in range(n):
+        petr, dist = [int(arg) for arg in input().strip().split()]
+        tank += petr
+        
+        if dist <= tank:
+            tank -= dist
+        else:
+            tank = 0
+            res = ind+1
+            
+        q.put((petr, dist))
+            
+    print(res)
